@@ -20,21 +20,56 @@ var windDisplay = $('#wind');
 var humidityDisplay = $('#humidity');
 
 var cardEl = $('.cards');
+var listEl = $('#savedLocation');
+displaydeFaultList();
 
+// get all forcecast data
 function getLocation() {
-    var location = userInput.val();
-
-    if (location) { // is there a value?
-        getGeoLocation(location);
+    console.log(this.id);
+    if (this.id == 'search-bttn') {
+        var location = userInput.val();
+        if (location) { // is there a value?
+            getGeoLocation(location);
+        } else {
+            // alert to ask user to enter location
+            alert('Please enter location');
+        }
     } else {
-        // alert to ask user to enter location
-        alert('Please enter location');
+        getGeoLocationSearch(this.id);
     }
 }
 
-// method to get lat & lon
-var getGeoLocation = function (input) {
-    var apiUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + input + '&appid=7d52d6952b84f7e1c8daa38649e55c8d';
+// method to get latitude & longitude
+var getGeoLocation = function (location) {
+    var apiUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + location + '&appid=7d52d6952b84f7e1c8daa38649e55c8d';
+
+    // steps to fetch Geocode API
+    fetch(apiUrl)
+        .then(function (response) {
+            if (response.ok) {
+                response.json().then(function (data) {
+                    //   destructing data in index 0 - lat & lon
+                    var { lat, lon } = data[0];
+                    // adding '' turns it into strings
+                    getCurrentDayForecast(lat, lon);
+                    get5dayForecast(lat, lon);
+                    var defaultList = JSON.parse(localStorage.getItem('location')) || [];
+                    defaultList.push(location);
+                    localStorage.setItem('location', JSON.stringify(defaultList));
+                    displaydeFaultList();
+                });
+            } else {
+                alert('Error: ' + response.statusText);
+            }
+        })
+        .catch(function (error) {
+            alert('Unable to connect');
+        });
+};
+
+// method to get latitude & longitude
+var getGeoLocationSearch = function (location) {
+    var apiUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + location + '&appid=7d52d6952b84f7e1c8daa38649e55c8d';
 
     // steps to fetch Geocode API
     fetch(apiUrl)
@@ -52,9 +87,18 @@ var getGeoLocation = function (input) {
             }
         })
         .catch(function (error) {
-            alert('Unable to connect to GitHub');
+            alert('Unable to connect');
         });
 };
+
+function displaydeFaultList() {
+    listEl.empty();
+    var listDisplay = JSON.parse(localStorage.getItem('location')) || [];
+
+    listDisplay.forEach(function (item) {
+        listEl.append('<button class="listBtn" id="' + item + '">' + item + '</button>');
+    });
+}
 
 var getCurrentDayForecast = function (latitude, longitude) {
     var apiUrl = 'https://api.openweathermap.org/data/2.5/weather?lat=' + latitude + '&lon=' +
@@ -68,18 +112,18 @@ var getCurrentDayForecast = function (latitude, longitude) {
                     const date = new Date(data.dt * 1000);
                     const formattedDate = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
                     var { temp, humidity } = data.main;
-                    //display of each values of properties
-                    locationDisplay.textContent = data.name + ' ' + formattedDate;
-                    tempDisplay.textContent = 'Temp: ' + temp + ' °F';
-                    windDisplay.textContent = 'Wind: ' + data.wind.speed + ' MPH';
-                    humidityDisplay.textContent = 'Humidity: ' + humidity + '%';
+                    //display of each properties's values 
+                    locationDisplay.text(data.name + ' ' + formattedDate);
+                    tempDisplay.text('Temp: ' + temp + ' °F');
+                    windDisplay.text('Wind: ' + data.wind.speed + ' MPH');
+                    humidityDisplay.text('Humidity: ' + humidity + '%');
                 });
             } else {
                 alert('Error: ' + response.statusText);
             }
         })
         .catch(function (error) {
-            alert('Unable to connect to GitHub');
+            alert('Unable to connect');
         });
 };
 
@@ -91,7 +135,6 @@ var get5dayForecast = function (latitude, longitude) {
         .then(function (response) {
             if (response.ok) {
                 response.json().then(function (data) {
-                    console.log(data);
                     //get list dt
                     //convert so we can get the date
                     //filter by that date
@@ -111,7 +154,6 @@ var get5dayForecast = function (latitude, longitude) {
                         }
                     }
 
-                    console.log(uniqueDates);
                     displayForecast(uniqueDates);
                 });
             } else {
@@ -125,11 +167,8 @@ var get5dayForecast = function (latitude, longitude) {
 
 function isDateInArray(item, uniqueList) {
     for (var i = 0; i < uniqueList.length; i++) {
-        var itemDate= new Date(item.dt * 1000);
-        var uniqDate= new Date(uniqueList[i].dt * 1000);
-
-        console.log(itemDate);
-        console.log(itemDate.getDay());
+        var itemDate = new Date(item.dt * 1000);
+        var uniqDate = new Date(uniqueList[i].dt * 1000);
 
         if (itemDate.getDay() === uniqDate.getDay()) {
             return true;
@@ -158,5 +197,5 @@ function displayForecast(forecastList) {
     });
 }
 
-
+$(listEl).on("click", ".listBtn", getLocation);
 $(searchBttn).click(getLocation);

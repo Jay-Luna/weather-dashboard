@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Weather Dashboard</title>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="./assets/reset.css" />
     <link rel="stylesheet" href="./assets/style.css" />
 </head>
 
@@ -21,8 +22,10 @@
         <h2>Search for a City</h2>
         <input id="input"></input>
         <button id="search-bttn">search</button>
+    <div id="savedLocation">    
+    </div>
     </aside>
-    <div>
+    <div class="current-location">
         <!-- current location with temp, air, info -->
         <h2 id="location">Default location & Date</h2>
         <h3 id="temp">Default temp</h3>
