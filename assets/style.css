@@ -1,24 +1,28 @@
 nav{
-    height: fit-content;
-border-radius: 5px;
+border-radius: 3px;
   /* use linear-gradient() function to create a fading background  */
   background-image: linear-gradient(
     rgba(232, 102, 236, 0.3) 0%,
     rgba(232, 102, 236, 0.6) 100%
   );
-  text-align: center;
-  font-size: x-large;
+  font-size:x-large;
+  display:flex;
+  justify-self: center;
 
 }
 
 aside {
-    height: auto;
-    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
     padding: 5px;
+    margin: 4px;
     float: left;
     width: 20%;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     background-color: #2589bd;
+
+
 }
 
 .current-location {
@@ -28,22 +32,37 @@ aside {
     background-color: #0072bb;
     color: #ffffff;
     text-align: center;
+    margin: 3px,3px;
 
 }
 
 .forecast-card {
-    display: flex;
-    padding: 20px;
-    margin: 30px 30px 0;
-    flex-direction: column;
-    outline: 6px ridge var(--gin);
-    outline-color: lightgray;
-    outline-offset: -5px;
+margin: 10px;
+outline: 2px dashed rgb(60, 40, 127);
+outline-offset: -2px;
+   
+} 
+.cards{
+  display: flex;
+}
+
+p{
+  margin-left: 10%;
+}
+h1{
+  margin: auto;
+}
+h2{
+  margin-left: 5px;
 }
 
 #forcast{
-flex-direction: row;
-background-color:aquamarine;
-}
 
+display: flex;
+background-image: linear-gradient(
+  rgba(232, 102, 236, 0.3) 0%,
+  rgba(232, 102, 236, 0.6) 100%
+  );
+
+}
 

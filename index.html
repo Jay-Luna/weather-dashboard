@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Weather Dashboard</title>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="./assets/reset.css" />
     <link rel="stylesheet" href="./assets/style.css" />
 </head>
 
@@ -22,22 +21,23 @@
         <h2>Search for a City</h2>
         <input id="input"></input>
         <button id="search-bttn">search</button>
-    <div id="savedLocation">    
-    </div>
+        <div id="savedLocation">
+        </div>
     </aside>
-    <div class="current-location">
-        <!-- current location with temp, air, info -->
-        <h2 id="location">Default location & Date</h2>
-        <h3 id="temp">Default temp</h3>
-        <h3 id="wind">Default wind</h3>
-        <h3 id="humidity">Default humidity</h3>
-    </div>
+    <section id="weather-content">
+        <div class="current-location">
+            <!-- current location with temp, air, info -->
+            <h2 id="location">Default location & Date</h2>
+            <h3 id="temp">Default temp</h3>
+            <h3 id="wind">Default wind</h3>
+            <h3 id="humidity">Default humidity</h3>
+        </div>
+        <div id="forcast">
+            <h2>5 day Forcast</h2>
+            <div class="cards"></div>
+        </div>
+    </section>
 
-
-    <div id="forcast">
-        <h2>5 day Forcast</h2>
-        <div class="cards"></div>
-    </div>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
