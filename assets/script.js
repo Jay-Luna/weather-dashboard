@@ -33,7 +33,7 @@ function getLocation() {
 
 // method to get latitude & longitude
 var getGeoLocation = function (location) {
-    var apiUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + location + '&appid=' + APIkey;
+    var apiUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + location + '&appid=' + APIkey;
 
     // steps to fetch Geocode API
     fetch(apiUrl)
@@ -108,7 +108,7 @@ var getCurrentDayForecast = function (latitude, longitude) {
                     //display of each properties's values 
                     locationDisplay.text(data.name + ' ' + formattedDate);
                     // this is getting the icon from openweatherapi
-                    iconDisplay.attr("src","http://openweathermap.org/img/w/"+ data.weather[0].icon+".png");
+                    iconDisplay.attr("src","https://openweathermap.org/img/w/"+ data.weather[0].icon+".png");
                     tempDisplay.text('Temp: ' + temp + ' °F');
                     windDisplay.text('Wind: ' + data.wind.speed + ' MPH');
                     humidityDisplay.text('Humidity: ' + humidity + '%');
@@ -181,7 +181,7 @@ function displayForecast(forecastList) {
         var humidity = 'Humidity: ' + item.main.humidity + '%';
         forecastCard.append('<p>' + formattedDate + '</p>');
         // this is getting the icon from openweatherapi
-        forecastCard.append('<img src="http://openweathermap.org/img/w/'
+        forecastCard.append('<img src="https://openweathermap.org/img/w/'
         + item.weather[0].icon + '.png" />');
         forecastCard.append('<p>' + temp + '</p>');
         forecastCard.append('<p>' + wind + '</p>');
