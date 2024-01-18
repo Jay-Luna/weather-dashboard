@@ -15,12 +15,15 @@ var searchBttn = $('#search-bttn');
 var userInput = $('#input');
 
 var locationDisplay = $('#location');
+var iconDisplay = $('#icon');
 var tempDisplay = $('#temp');
 var windDisplay = $('#wind');
 var humidityDisplay = $('#humidity');
 
 var cardEl = $('.cards');
 var listEl = $('#savedLocation');
+var weatherEl = $('#weather-content');
+
 displaydeFaultList();
 
 // get all forcecast data
@@ -114,6 +117,8 @@ var getCurrentDayForecast = function (latitude, longitude) {
                     var { temp, humidity } = data.main;
                     //display of each properties's values 
                     locationDisplay.text(data.name + ' ' + formattedDate);
+                    // this is getting the icon from openweatherapi
+                    iconDisplay.attr("src","http://openweathermap.org/img/w/"+ data.weather[0].icon+".png");
                     tempDisplay.text('Temp: ' + temp + ' °F');
                     windDisplay.text('Wind: ' + data.wind.speed + ' MPH');
                     humidityDisplay.text('Humidity: ' + humidity + '%');
@@ -184,11 +189,15 @@ function displayForecast(forecastList) {
         const date = new Date(item.dt * 1000);
         const formattedDate = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
+        weatherEl.removeClass('hidden');
         var forecastCard = $('<div class="forecast-card">');
         var temp = 'Temp: ' + item.main.temp + ' °F';
         var wind = 'Wind: ' + item.wind.speed + ' MPH';
         var humidity = 'Humidity: ' + item.main.humidity + '%';
         forecastCard.append('<p>' + formattedDate + '</p>');
+        // this is getting the icon from openweatherapi
+        forecastCard.append('<img src="http://openweathermap.org/img/w/'
+        + item.weather[0].icon + '.png" />');
         forecastCard.append('<p>' + temp + '</p>');
         forecastCard.append('<p>' + wind + '</p>');
         forecastCard.append('<p>' + humidity + '</p>');

@@ -1,68 +1,72 @@
-nav{
-border-radius: 3px;
+nav {
+  border-radius: 3px;
   /* use linear-gradient() function to create a fading background  */
-  background-image: linear-gradient(
-    rgba(232, 102, 236, 0.3) 0%,
-    rgba(232, 102, 236, 0.6) 100%
-  );
-  font-size:x-large;
-  display:flex;
+  background-image: linear-gradient(rgba(232, 102, 236, 0.3) 0%,
+      rgba(232, 102, 236, 0.6) 100%);
+  font-size: x-large;
+  display: flex;
   justify-self: center;
 
 }
 
+/* aside search input */
 aside {
-    display: flex;
-    flex-direction: column;
-    border-radius: 5px;
-    padding: 5px;
-    margin: 4px;
-    float: left;
-    width: 20%;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    background-color: #2589bd;
-
-
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  padding: 5px;
+  float: left;
+  width: 20%;
+  height: 100vh;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: #2589bd;
 }
 
+/* current location display */
 .current-location {
-    padding: 1%;
-    margin-left: 0px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    background-color: #0072bb;
-    color: #ffffff;
-    text-align: center;
-    margin: 3px,3px;
+  padding: 1%;
+  margin-left: 0px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: #0072bb;
+  color: #ffffff;
+  text-align: center;
+  margin: 3px, 3px;
 
 }
 
+/* each forcast box with fetched data display */
 .forecast-card {
-margin: 10px;
-outline: 2px dashed rgb(60, 40, 127);
-outline-offset: -2px;
-   
-} 
-.cards{
+  margin: 10px;
+  outline: 2px dashed rgb(60, 40, 127);
+  outline-offset: -2px;
+
+}
+
+/* display of each forcaste card */
+.cards {
   display: flex;
 }
 
-p{
+p {
   margin-left: 10%;
 }
-h1{
+
+h1 {
   margin: auto;
 }
-h2{
+
+h2 {
   margin-left: 5px;
 }
 
-#forcast{
-
-display: flex;
-background-image: linear-gradient(
-  rgba(232, 102, 236, 0.3) 0%,
-  rgba(232, 102, 236, 0.6) 100%
-  );
-
+.hidden {
+  display: none;
 }
 
+/* display of the 5 day forecast */
+#forcast {
+  display: flex;
+  background-image: linear-gradient(rgba(232, 102, 236, 0.3) 0%,
+      rgba(232, 102, 236, 0.6) 100%);
+
+}
