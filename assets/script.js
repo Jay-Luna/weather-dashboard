@@ -1,14 +1,3 @@
-/*GIVEN a weather dashboard with form inputs
-WHEN I search for a city
-THEN I am presented with current and future conditions for that city and that city is added to the search history
-WHEN I view current weather conditions for that city
-THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the wind speed
-WHEN I view future weather conditions for that city
-THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
-WHEN I click on a city in the search history
-THEN I am again presented with current and future conditions for that city
-*/
-
 var APIkey = "7d52d6952b84f7e1c8daa38649e55c8d";
 
 var searchBttn = $('#search-bttn');
@@ -44,7 +33,7 @@ function getLocation() {
 
 // method to get latitude & longitude
 var getGeoLocation = function (location) {
-    var apiUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + location + '&appid=7d52d6952b84f7e1c8daa38649e55c8d';
+    var apiUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + location + '&appid=' + APIkey;
 
     // steps to fetch Geocode API
     fetch(apiUrl)
@@ -72,7 +61,7 @@ var getGeoLocation = function (location) {
 
 // method to get latitude & longitude
 var getGeoLocationSearch = function (location) {
-    var apiUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + location + '&appid=7d52d6952b84f7e1c8daa38649e55c8d';
+    var apiUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + location + '&appid=' + APIkey;
 
     // steps to fetch Geocode API
     fetch(apiUrl)
@@ -96,6 +85,7 @@ var getGeoLocationSearch = function (location) {
 
 function displaydeFaultList() {
     listEl.empty();
+    // grabs list from local storage or get empty array
     var listDisplay = JSON.parse(localStorage.getItem('location')) || [];
 
     listDisplay.forEach(function (item) {
@@ -105,7 +95,7 @@ function displaydeFaultList() {
 
 var getCurrentDayForecast = function (latitude, longitude) {
     var apiUrl = 'https://api.openweathermap.org/data/2.5/weather?lat=' + latitude + '&lon=' +
-        longitude + '&appid=7d52d6952b84f7e1c8daa38649e55c8d&units=imperial';
+        longitude + '&appid=' + APIkey + '&units=imperial';
 
     fetch(apiUrl)
         .then(function (response) {
@@ -136,22 +126,14 @@ var get5dayForecast = function (latitude, longitude) {
     var apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + latitude + '&lon=' +
         longitude + '&appid=7d52d6952b84f7e1c8daa38649e55c8d&units=imperial';
 
+    // this will call the 5day forecast with 3 hour reports
     fetch(apiUrl)
         .then(function (response) {
             if (response.ok) {
-                response.json().then(function (data) {
-                    //get list dt
-                    //convert so we can get the date
-                    //filter by that date
-                    // var reducedList = data.list.filter((item, i, self) =>
-                    //     self.findIndex(d => {
-                    //         var dDate = new Date(d.dt);
-                    //         var itemDate = new Date(item.dt);
-                    //         dDate.getDate() === itemDate.getDate()
-                    //     }) === i
-                    // );
+                response.json().then(function (data) {            
                     var list = data.list;
 
+                    // get unique date data per day
                     var uniqueDates = [];
                     for (var i = 0; i < list.length; i++) {
                         if (!isDateInArray(list[i], uniqueDates)) {
@@ -159,6 +141,7 @@ var get5dayForecast = function (latitude, longitude) {
                         }
                     }
 
+                    // display the 5 day forecast
                     displayForecast(uniqueDates);
                 });
             } else {
@@ -170,6 +153,7 @@ var get5dayForecast = function (latitude, longitude) {
         });
 };
 
+// Method to check the uniqueness of the date list
 function isDateInArray(item, uniqueList) {
     for (var i = 0; i < uniqueList.length; i++) {
         var itemDate = new Date(item.dt * 1000);
@@ -182,6 +166,7 @@ function isDateInArray(item, uniqueList) {
     return false;
 }
 
+// Creates forecast cards and appends to the html
 function displayForecast(forecastList) {
     cardEl.empty();
 
@@ -205,6 +190,8 @@ function displayForecast(forecastList) {
         cardEl.append(forecastCard);
     });
 }
+
+/* Button event listeners */
 
 $(listEl).on("click", ".listBtn", getLocation);
 $(searchBttn).click(getLocation);
